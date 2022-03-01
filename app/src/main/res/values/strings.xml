@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Rick and Morty</string>
+
+    <string name="characters_toolbar_title">Characters</string>
+    <string name="characters_repeat_loading">Repeat</string>
+    <string name="characters_item_image_description">Character\'s Image</string>
+    <string name="characters_loading_error">Check the connection</string>
+
+    <string name="details_toolbar_title">Details</string>
+
+    <string name="episodes_toolbar_title">Episodes</string>
+
 </resources>
