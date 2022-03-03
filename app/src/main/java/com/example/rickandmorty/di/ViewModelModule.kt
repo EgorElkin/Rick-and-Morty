@@ -2,9 +2,11 @@ package com.example.rickandmorty.di
 
 import com.example.rickandmorty.domain.usecase.GetCharactersUseCase
 import com.example.rickandmorty.domain.usecase.GetDetailsUseCase
+import com.example.rickandmorty.domain.usecase.GetEpisodesUseCase
 import com.example.rickandmorty.presentation.characters.CharactersViewModelFactory
 import com.example.rickandmorty.presentation.characters.pagination.Paginator
 import com.example.rickandmorty.presentation.details.DetailsViewModelFactory
+import com.example.rickandmorty.presentation.episodes.EpisodesViewModelFactory
 import dagger.Module
 import dagger.Provides
 
@@ -27,5 +29,12 @@ class ViewModelModule {
         getDetailsUseCase: GetDetailsUseCase
     ) : DetailsViewModelFactory{
         return DetailsViewModelFactory(getDetailsUseCase)
+    }
+
+    @Provides
+    fun providesEpisodesViewModelFactory(
+        getEpisodesUseCase: GetEpisodesUseCase
+    ) : EpisodesViewModelFactory {
+        return EpisodesViewModelFactory(getEpisodesUseCase)
     }
 }

@@ -2,7 +2,7 @@ package com.example.rickandmorty.data.api.enitity
 
 import com.google.gson.annotations.SerializedName
 
-class DetailsResponse(
+data class DetailsResponse(
     @SerializedName(value = "id")
     val id: Int,
     @SerializedName(value = "name")
@@ -19,7 +19,7 @@ class DetailsResponse(
     val episodes: List<String>
 )
 
-class LocationResponse(
+data class LocationResponse(
     @SerializedName(value = "name")
     val name: String
 )

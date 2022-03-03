@@ -7,3 +7,7 @@ data class DetailsUiState(
     val isError: Boolean = false,
     val userInfo: Character? = null,
 )
+
+data class DetailsUiEvents(
+    val navigateToEpisodes: List<Int>? = null
+)

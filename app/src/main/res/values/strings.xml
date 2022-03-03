@@ -12,7 +12,9 @@
     <string name="details_repeat_button">Repeat</string>
     <string name="details_status_species">%1$s - %2$s</string>
     <string name="details_location">&lt;font color="#9E9E9E"&gt;Last known location:&lt;/font&gt;&lt;br&gt;%1$s</string>
+    <string name="details_episodes">&lt;font color="#9E9E9E"&gt;Show episodes (%1$d)&lt;/font&gt;</string>
 
     <string name="episodes_toolbar_title">Episodes</string>
+    <string name="episodes_air_date">Air date: %1$s</string>
 
 </resources>

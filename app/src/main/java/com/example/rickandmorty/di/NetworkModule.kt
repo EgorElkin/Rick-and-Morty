@@ -2,6 +2,8 @@ package com.example.rickandmorty.di
 
 import com.example.rickandmorty.data.api.CharactersApiService
 import com.example.rickandmorty.data.api.CharactersNetworkDataSource
+import com.example.rickandmorty.data.api.EpisodesApiService
+import com.example.rickandmorty.data.api.EpisodesNetworkDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -35,7 +37,19 @@ class NetworkModule {
 
     @Provides
     @Reusable
-    fun providesCharactersNetworkDataSource(charactersApiService: CharactersApiService): CharactersNetworkDataSource{
+    fun provideCharactersNetworkDataSource(charactersApiService: CharactersApiService): CharactersNetworkDataSource{
         return CharactersNetworkDataSource(charactersApiService)
+    }
+
+    @Provides
+    @Reusable
+    fun provideEpisodesApi(retrofit: Retrofit): EpisodesApiService{
+        return retrofit.create(EpisodesApiService::class.java)
+    }
+
+    @Provides
+    @Reusable
+    fun provideEpisodesNetworkDataSource(episodesApiService: EpisodesApiService): EpisodesNetworkDataSource{
+        return EpisodesNetworkDataSource(episodesApiService)
     }
 }

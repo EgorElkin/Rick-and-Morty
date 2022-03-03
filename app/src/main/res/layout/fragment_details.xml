@@ -43,7 +43,7 @@
     </LinearLayout>
 
     <include
-        layout="@layout/details_error_layout"
+        layout="@layout/error_layout"
         android:id="@+id/detailsError"
         android:visibility="invisible"/>
 

@@ -2,14 +2,14 @@ package com.example.rickandmorty.data.api.enitity
 
 import com.google.gson.annotations.SerializedName
 
-class CharactersResponse(
+data class CharactersResponse(
     @SerializedName(value = "info")
     val responseInfo: ResponseInfo,
     @SerializedName(value = "results")
     val results: List<DetailsResponse>
 )
 
-class ResponseInfo(
+data class ResponseInfo(
     @SerializedName(value = "count")
     val charactersCount: Int,
     @SerializedName(value = "pages")

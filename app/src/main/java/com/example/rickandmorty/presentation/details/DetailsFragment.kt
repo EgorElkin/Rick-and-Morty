@@ -1,7 +1,6 @@
 package com.example.rickandmorty.presentation.details
 
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.View
 import androidx.core.text.HtmlCompat
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT
@@ -57,14 +56,18 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
             (activity as Navigator).navigateBack()
         }
 
-        binding.detailsError.detailsRepeatButton.setOnClickListener {
+        binding.detailsError.repeatButton.setOnClickListener {
             arguments?.getInt(DETAILS_ARG_KEY)?.let { viewModel.loadDetails(it) }
+        }
+
+        binding.detailsBio.detailsEpisodesTextView.setOnClickListener {
+            viewModel.showEpisodes()
         }
     }
 
     private fun setUpObservers(){
         viewModel.uiState.observe(this.viewLifecycleOwner){
-            binding.detailsError.detailsErrorBlock.isVisible = it.isError
+            binding.detailsError.errorBlock.isVisible = it.isError
             binding.detailsProgressBar.isVisible = it.isLoading
             it.userInfo?.let { character ->
                 Glide.with(binding.detailsImageView)
@@ -72,10 +75,20 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
                     .transform(RoundedCorners(resources.getDimensionPixelOffset(R.dimen.details_avatar_corner_radius)))
                     .placeholder(R.color.gray_light)
                     .into(binding.detailsImageView)
+
                 binding.detailsBio.detailsNameTextView.text = character.name
                 binding.detailsBio.detailStatusSpeciesTextView.text = getString(R.string.details_status_species, character.status, character.species)
-                val html = getString(R.string.details_location, character.location.name)
-                binding.detailsBio.detailsLocationTextView.text = HtmlCompat.fromHtml(html, FROM_HTML_MODE_COMPACT)
+                val locationHtml = getString(R.string.details_location, character.location.name)
+                binding.detailsBio.detailsLocationTextView.text = HtmlCompat.fromHtml(locationHtml, FROM_HTML_MODE_COMPACT)
+                val episodesHtml = getString(R.string.details_episodes, character.episodes.size)
+                binding.detailsBio.detailsEpisodesTextView.text = HtmlCompat.fromHtml(episodesHtml, FROM_HTML_MODE_COMPACT)
+            }
+        }
+
+        viewModel.uiEvent.observe(this.viewLifecycleOwner){ event ->
+            event.navigateToEpisodes?.let {
+                (activity as Navigator).navigateToEpisodes(it)
+                viewModel.eventHandled()
             }
         }
     }
