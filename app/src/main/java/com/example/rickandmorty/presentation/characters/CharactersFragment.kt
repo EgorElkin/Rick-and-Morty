@@ -39,6 +39,7 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
 
         initUi()
         setUpObservers()
+        setUpBackButtonBehavior()
 
         if(savedInstanceState == null){
             viewModel.loadFirstPage()
@@ -85,8 +86,9 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
                 }
             }
         })
+    }
 
-        this.view?.isFocusableInTouchMode = true
+    private fun setUpBackButtonBehavior(){
         this.view?.setOnKeyListener( object : View.OnKeyListener{
             override fun onKey(p0: View?, keyCode: Int, p2: KeyEvent?): Boolean {
                 if(keyCode == KeyEvent.KEYCODE_BACK){

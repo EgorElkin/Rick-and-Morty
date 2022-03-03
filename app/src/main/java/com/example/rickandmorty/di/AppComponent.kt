@@ -2,6 +2,7 @@ package com.example.rickandmorty.di
 
 import android.content.Context
 import com.example.rickandmorty.presentation.characters.CharactersViewModelFactory
+import com.example.rickandmorty.presentation.details.DetailsViewModelFactory
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -11,6 +12,7 @@ import javax.inject.Singleton
 interface AppComponent {
 
     fun getCharactersViewModelFactory(): CharactersViewModelFactory
+    fun getDetailsViewModelFactory(): DetailsViewModelFactory
 
     @Component.Factory
     interface Factory {

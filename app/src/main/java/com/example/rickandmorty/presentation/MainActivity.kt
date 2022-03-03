@@ -2,8 +2,10 @@ package com.example.rickandmorty.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.telecom.Call
 import com.example.rickandmorty.R
 import com.example.rickandmorty.presentation.characters.CharactersFragment
+import com.example.rickandmorty.presentation.details.DetailsFragment
 
 class MainActivity : AppCompatActivity(), Navigator{
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,7 +21,11 @@ class MainActivity : AppCompatActivity(), Navigator{
 
 // ------------------ Navigator ---------------------------->
     override fun navigateToDetails(id: Int) {
-        TODO("Not yet implemented")
+        println("debug: MainActivity: navigateToDetails: $id")
+        supportFragmentManager.beginTransaction()
+            .add(R.id.mainFragmentContainer, DetailsFragment.newInstance(id))
+            .addToBackStack(null)
+            .commitAllowingStateLoss()
     }
 
     override fun navigateToEpisodes() {
@@ -27,7 +33,7 @@ class MainActivity : AppCompatActivity(), Navigator{
     }
 
     override fun navigateBack() {
-        TODO("Not yet implemented")
+        onBackPressed()
     }
 // <------------------ Navigator ----------------------------
 }

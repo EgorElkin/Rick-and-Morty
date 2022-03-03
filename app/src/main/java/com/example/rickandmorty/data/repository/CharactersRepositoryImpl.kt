@@ -14,6 +14,6 @@ class CharactersRepositoryImpl(
     }
 
     override fun getDetails(characterId: Int): Observable<Character> {
-        TODO("Not yet implemented")
+        return charactersNetworkDataSource.loadDetails(characterId).toObservable()
     }
 }
