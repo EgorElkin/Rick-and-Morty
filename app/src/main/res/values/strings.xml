@@ -17,5 +17,6 @@
 
     <string name="episodes_toolbar_title">Episodes</string>
     <string name="episodes_air_date">Air date: %1$s</string>
+    <string name="episodes_network_error">unable to update</string>
 
 </resources>

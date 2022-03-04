@@ -4,8 +4,10 @@ import android.content.Context
 import androidx.room.Room
 import com.example.rickandmorty.data.database.AppDatabase
 import com.example.rickandmorty.data.database.CharactersLocalDataSource
+import com.example.rickandmorty.data.database.EpisodesLocalDataSource
 import com.example.rickandmorty.data.database.dao.CharacterBriefDao
 import com.example.rickandmorty.data.database.dao.CharacterDao
+import com.example.rickandmorty.data.database.dao.EpisodeDao
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -41,5 +43,17 @@ class DatabaseModule {
         characterDao: CharacterDao
     ): CharactersLocalDataSource{
         return CharactersLocalDataSource(characterBriefDao, characterDao)
+    }
+
+    @Provides
+    @Reusable
+    fun provideEpisodeDao(database: AppDatabase): EpisodeDao{
+        return database.episodeDao()
+    }
+
+    @Provides
+    @Reusable
+    fun provideEpisodeLocalDataSource(episodeDao: EpisodeDao): EpisodesLocalDataSource{
+        return EpisodesLocalDataSource(episodeDao)
     }
 }

@@ -1,7 +1,9 @@
 package com.example.rickandmorty.presentation.episodes
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -66,6 +68,19 @@ class EpisodesFragment : Fragment(R.layout.fragment_episodes) {
                 episodesAdapter.setEpisodes(episodes)
             }
         }
+
+        viewModel.uiEvent.observe(this.viewLifecycleOwner){ event ->
+            event.errorRes?.let{
+                showError(it)
+            }
+        }
+    }
+
+    private fun showError(errorRes: Int){
+        val toast = Toast.makeText(requireContext(), getString(errorRes), Toast.LENGTH_SHORT)
+        toast.setGravity(Gravity.CENTER, 0, 0)
+        toast.show()
+        viewModel.errorShown()
     }
 
     companion object{

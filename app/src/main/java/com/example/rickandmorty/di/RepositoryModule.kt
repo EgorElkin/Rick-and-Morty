@@ -3,6 +3,7 @@ package com.example.rickandmorty.di
 import com.example.rickandmorty.data.api.CharactersNetworkDataSource
 import com.example.rickandmorty.data.api.EpisodesNetworkDataSource
 import com.example.rickandmorty.data.database.CharactersLocalDataSource
+import com.example.rickandmorty.data.database.EpisodesLocalDataSource
 import com.example.rickandmorty.data.repository.CharactersRepositoryImpl
 import com.example.rickandmorty.data.repository.EpisodesRepositoryImpl
 import com.example.rickandmorty.domain.repository.CharactersRepository
@@ -26,8 +27,9 @@ class RepositoryModule {
     @Provides
     @Reusable
     fun provideEpisodesRepository(
-        episodesNetworkDataSource: EpisodesNetworkDataSource
+        episodesNetworkDataSource: EpisodesNetworkDataSource,
+        episodesLocalDataSource: EpisodesLocalDataSource
     ): EpisodesRepository{
-        return EpisodesRepositoryImpl(episodesNetworkDataSource)
+        return EpisodesRepositoryImpl(episodesNetworkDataSource, episodesLocalDataSource)
     }
 }

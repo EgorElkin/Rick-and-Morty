@@ -22,7 +22,7 @@ class EpisodesAdapter : RecyclerView.Adapter<EpisodesAdapter.EpisodeViewHolder>(
     fun setEpisodes(newList: List<Episode>){
         episodes.clear()
         episodes.addAll(newList)
-        notifyItemInserted(0)
+        notifyItemRangeInserted(0, episodes.size)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EpisodeViewHolder {

@@ -7,3 +7,7 @@ data class EpisodesUiState(
     val isError: Boolean = false,
     val episodes: List<Episode>? = null
 )
+
+data class EpisodesUiEvents(
+    val errorRes: Int? = null,
+)
