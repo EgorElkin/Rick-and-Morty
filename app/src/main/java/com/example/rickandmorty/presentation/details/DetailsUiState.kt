@@ -9,5 +9,6 @@ data class DetailsUiState(
 )
 
 data class DetailsUiEvents(
+    val errorRes: Int? = null,
     val navigateToEpisodes: List<Int>? = null
 )

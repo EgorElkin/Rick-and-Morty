@@ -1,7 +1,9 @@
 package com.example.rickandmorty.presentation.details
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
+import android.widget.Toast
 import androidx.core.text.HtmlCompat
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT
 import androidx.core.view.isVisible
@@ -90,7 +92,17 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
                 (activity as Navigator).navigateToEpisodes(it)
                 viewModel.eventHandled()
             }
+            event.errorRes?.let{
+                showError(it)
+            }
         }
+    }
+
+    private fun showError(errorRes: Int){
+        val toast = Toast.makeText(requireContext(), getString(errorRes), Toast.LENGTH_SHORT)
+        toast.setGravity(Gravity.CENTER, 0, 0)
+        toast.show()
+        viewModel.errorShown()
     }
 
     companion object{

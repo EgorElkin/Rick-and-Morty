@@ -8,6 +8,7 @@ import com.example.rickandmorty.domain.usecase.GetCharactersUseCase
 import com.example.rickandmorty.presentation.characters.adapter.item.CharacterItem
 import com.example.rickandmorty.presentation.characters.adapter.item.CharactersToItemsMapper
 import com.example.rickandmorty.presentation.characters.pagination.Paginator
+import io.reactivex.Notification
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -29,6 +30,7 @@ class CharactersViewModel(
     private var isNextPageLoading = false
     private var isError = false
 
+    @Suppress("UnstableApiUsage")
     fun loadNextPage() {
         if (isNextPageLoading || isError){
             return
@@ -39,7 +41,21 @@ class CharactersViewModel(
             getCharactersUseCase(paginator.currentPage)
                 .subscribeOn(Schedulers.io())
                 .map(CharactersToItemsMapper())
+                .materialize()
                 .observeOn(AndroidSchedulers.mainThread())
+                .dematerialize {
+                    when {
+                        it.isOnError -> {
+                            Notification.createOnError(it.error ?: Throwable())
+                        }
+                        it.isOnNext -> {
+                            Notification.createOnNext(it.value!!)
+                        }
+                        else -> {
+                            Notification.createOnComplete()
+                        }
+                    }
+                }
                 .doAfterTerminate {
                     isNextPageLoading = false
                 }
@@ -54,8 +70,10 @@ class CharactersViewModel(
                     } else {
                         paginator.pageLoaded()
                     }
-                    usersList.addAll(it)
-                    _uiState.value = _uiState.value?.copy(isLoading = false, isRepeatAvailable = false, characters = usersList)
+                    if(it.isNotEmpty()){
+                        usersList.addAll(it)
+                        _uiState.value = _uiState.value?.copy(isLoading = false, isRepeatAvailable = false, characters = usersList)
+                    }
                 },{
                     isError = true
                     _uiState.value = _uiState.value?.copy(isLoading = false, isRepeatAvailable = true)

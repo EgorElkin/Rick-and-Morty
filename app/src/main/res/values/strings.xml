@@ -9,6 +9,7 @@
     <string name="details_toolbar_title">Details</string>
     <string name="details_avatar_description">Character\"s Image</string>
     <string name="details_loading_error">Something occurred!\nTry again.</string>
+    <string name="characters_network_error">unable to update</string>
     <string name="details_repeat_button">Repeat</string>
     <string name="details_status_species">%1$s - %2$s</string>
     <string name="details_location">&lt;font color="#9E9E9E"&gt;Last known location:&lt;/font&gt;&lt;br&gt;%1$s</string>
