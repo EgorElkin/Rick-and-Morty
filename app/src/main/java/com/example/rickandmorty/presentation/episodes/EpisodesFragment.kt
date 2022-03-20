@@ -11,7 +11,6 @@ import com.example.rickandmorty.App
 import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.FragmentEpisodesBinding
 import com.example.rickandmorty.presentation.MainActivity
-import com.example.rickandmorty.presentation.Navigator
 import com.example.rickandmorty.presentation.episodes.adapter.EpisodesAdapter
 import java.util.*
 
@@ -50,7 +49,7 @@ class EpisodesFragment : Fragment(R.layout.fragment_episodes) {
 
     private fun initUi(){
         binding.episodesToolbar.setNavigationOnClickListener {
-            (activity as Navigator).navigateBack()
+            viewModel.backClicked()
         }
         binding.episodesError.repeatButton.setOnClickListener {
             arguments?.getIntegerArrayList(EPISODES_ARG_KEY)?.toList()?.let {

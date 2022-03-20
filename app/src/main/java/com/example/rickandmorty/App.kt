@@ -12,6 +12,8 @@ class App : Application() {
             "AppComponent isn't initialized"
         }
 
+
+
     override fun onCreate() {
         super.onCreate()
         _appComponent = DaggerAppComponent.factory().create(applicationContext)

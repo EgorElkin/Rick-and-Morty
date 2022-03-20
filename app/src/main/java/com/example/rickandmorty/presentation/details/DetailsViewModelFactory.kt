@@ -6,13 +6,15 @@ import com.example.rickandmorty.domain.usecase.GetDetailsUseCase
 
 @Suppress("UNCHECKED_CAST")
 class DetailsViewModelFactory(
-    private val getDetailsUseCase: GetDetailsUseCase
-) : ViewModelProvider.Factory {
+    private val getDetailsUseCase: GetDetailsUseCase,
+    private var onEpisodesClicked: ((List<Int>) -> Unit)?,
+    private var onBackClicked: (() -> Unit)?,
+    ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when{
             modelClass.isAssignableFrom(DetailsViewModel::class.java) -> {
-                DetailsViewModel(getDetailsUseCase) as T
+                DetailsViewModel(getDetailsUseCase, onEpisodesClicked, onBackClicked) as T
             }
             else -> {
                 throw IllegalArgumentException("Unknown class name")

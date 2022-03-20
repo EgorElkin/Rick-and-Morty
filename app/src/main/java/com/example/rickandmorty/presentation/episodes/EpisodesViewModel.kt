@@ -11,7 +11,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class EpisodesViewModel(private val getEpisodesUseCase: GetEpisodesUseCase) : ViewModel() {
+class EpisodesViewModel(
+    private val getEpisodesUseCase: GetEpisodesUseCase,
+    private var onBackClicked: (() -> Unit)?
+) : ViewModel() {
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
@@ -74,8 +77,13 @@ class EpisodesViewModel(private val getEpisodesUseCase: GetEpisodesUseCase) : Vi
         _uiEvent.value = _uiEvent.value?.copy(errorRes = null)
     }
 
+    fun backClicked(){
+        onBackClicked?.invoke()
+    }
+
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.dispose()
+        onBackClicked = null
     }
 }

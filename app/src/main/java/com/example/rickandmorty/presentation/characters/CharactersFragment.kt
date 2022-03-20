@@ -12,7 +12,6 @@ import com.example.rickandmorty.App
 import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.FragmentCharactersBinding
 import com.example.rickandmorty.presentation.MainActivity
-import com.example.rickandmorty.presentation.Navigator
 import com.example.rickandmorty.presentation.characters.adapter.CharactersAdapter
 import com.example.rickandmorty.presentation.characters.adapter.SpaceItemDecoration
 import com.example.rickandmorty.presentation.characters.pagination.PaginationAdapterHelper
@@ -67,7 +66,7 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
                 viewModel.loadNextPage()
             },
             characterItemClicked = {
-                (activity as Navigator).navigateToDetails(it.id)
+                viewModel.characterClicked(it.id)
             },
             repeatLoadingClicked = {
                 viewModel.repeat()

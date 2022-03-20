@@ -15,7 +15,6 @@ import com.example.rickandmorty.App
 import com.example.rickandmorty.R
 import com.example.rickandmorty.databinding.FragmentDetailsBinding
 import com.example.rickandmorty.presentation.MainActivity
-import com.example.rickandmorty.presentation.Navigator
 
 class DetailsFragment : Fragment(R.layout.fragment_details) {
 
@@ -55,7 +54,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
     private fun initUi(){
         binding.detailsToolbar.setNavigationOnClickListener {
-            (activity as Navigator).navigateBack()
+            viewModel.backClicked()
         }
 
         binding.detailsError.repeatButton.setOnClickListener {
@@ -63,7 +62,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         }
 
         binding.detailsBio.detailsEpisodesTextView.setOnClickListener {
-            viewModel.showEpisodes()
+            viewModel.episodesClicked()
         }
     }
 
@@ -88,10 +87,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         }
 
         viewModel.uiEvent.observe(this.viewLifecycleOwner){ event ->
-            event.navigateToEpisodes?.let {
-                (activity as Navigator).navigateToEpisodes(it)
-                viewModel.eventHandled()
-            }
             event.errorRes?.let{
                 showError(it)
             }

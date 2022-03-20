@@ -11,7 +11,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class DetailsViewModel(private val getDetailsUseCase: GetDetailsUseCase) : ViewModel() {
+class DetailsViewModel(
+    private val getDetailsUseCase: GetDetailsUseCase,
+    private var onEpisodesClicked: ((List<Int>) -> Unit)?,
+    private var onBackClicked: (() -> Unit)?
+) : ViewModel() {
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
@@ -72,23 +76,25 @@ class DetailsViewModel(private val getDetailsUseCase: GetDetailsUseCase) : ViewM
         )
     }
 
-    fun showEpisodes(){
+    fun errorShown(){
+        _uiEvent.value = _uiEvent.value?.copy(errorRes = null)
+    }
+
+    fun episodesClicked(){
         val episodesList = currentCharacter?.episodes?.map { episodeUrl ->
             episodeUrl.replace(Regex("[^0-9]"), "").toInt()
         } ?: emptyList()
-        _uiEvent.value = _uiEvent.value?.copy(navigateToEpisodes = episodesList)
+        onEpisodesClicked?.invoke(episodesList)
     }
 
-    fun eventHandled(){
-        _uiEvent.value = _uiEvent.value?.copy(navigateToEpisodes = null)
-    }
-
-    fun errorShown(){
-        _uiEvent.value = _uiEvent.value?.copy(errorRes = null)
+    fun backClicked(){
+        onBackClicked?.invoke()
     }
 
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.dispose()
+        onEpisodesClicked = null
+        onBackClicked = null
     }
 }

@@ -3,6 +3,7 @@ package com.example.rickandmorty.di
 import com.example.rickandmorty.domain.usecase.GetCharactersUseCase
 import com.example.rickandmorty.domain.usecase.GetDetailsUseCase
 import com.example.rickandmorty.domain.usecase.GetEpisodesUseCase
+import com.example.rickandmorty.navigation.GodFlowCoordinator
 import com.example.rickandmorty.presentation.characters.CharactersViewModelFactory
 import com.example.rickandmorty.presentation.characters.pagination.Paginator
 import com.example.rickandmorty.presentation.details.DetailsViewModelFactory
@@ -19,22 +20,25 @@ class ViewModelModule {
     @Provides
     fun providesCharactersViewModelFactory(
         getCharactersUseCase: GetCharactersUseCase,
-        paginator: Paginator
+        paginator: Paginator,
+        godFlowCoordinator: GodFlowCoordinator
     ): CharactersViewModelFactory{
-        return CharactersViewModelFactory(getCharactersUseCase, paginator)
+        return CharactersViewModelFactory(getCharactersUseCase, paginator, godFlowCoordinator::showDetails)
     }
 
     @Provides
     fun providesDetailsViewModelFactory(
-        getDetailsUseCase: GetDetailsUseCase
+        getDetailsUseCase: GetDetailsUseCase,
+        godFlowCoordinator: GodFlowCoordinator
     ) : DetailsViewModelFactory{
-        return DetailsViewModelFactory(getDetailsUseCase)
+        return DetailsViewModelFactory(getDetailsUseCase, godFlowCoordinator::showEpisodes, godFlowCoordinator::backNavigation)
     }
 
     @Provides
     fun providesEpisodesViewModelFactory(
-        getEpisodesUseCase: GetEpisodesUseCase
+        getEpisodesUseCase: GetEpisodesUseCase,
+        godFlowCoordinator: GodFlowCoordinator
     ) : EpisodesViewModelFactory {
-        return EpisodesViewModelFactory(getEpisodesUseCase)
+        return EpisodesViewModelFactory(getEpisodesUseCase, godFlowCoordinator::backNavigation)
     }
 }

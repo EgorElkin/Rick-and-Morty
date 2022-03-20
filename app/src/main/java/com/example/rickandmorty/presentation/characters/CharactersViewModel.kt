@@ -15,7 +15,8 @@ import io.reactivex.schedulers.Schedulers
 
 class CharactersViewModel(
     private val getCharactersUseCase: GetCharactersUseCase,
-    private val paginator: Paginator
+    private val paginator: Paginator,
+    private var onCharacterClicked: ((Int) -> Unit)?
 ) : ViewModel() {
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
@@ -98,8 +99,13 @@ class CharactersViewModel(
         _uiEvent.value = _uiEvent.value?.copy(errorMessageRes = null)
     }
 
+    fun characterClicked(id: Int){
+        onCharacterClicked?.invoke(id)
+    }
+
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.dispose()
+        onCharacterClicked = null
     }
 }
